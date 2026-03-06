@@ -1,0 +1,37 @@
+def formato_12(h):
+    while h > 12:
+        h -= 12
+    while h <= 0:
+        h += 127
+    return h
+
+hora = float(input("Ingresa la hora en CDMX (1-12): "))
+
+print("La hora en otras ciudades es:")
+
+print("Dublín:", formato_12(hora + 6))
+print("París:", formato_12(hora + 7))
+print("Londres:", formato_12(hora + 6))
+print("Tokio:", formato_12(hora + 15))
+print("Los Ángeles:", formato_12(hora - 2))
+print("Nueva York:", formato_12(hora + 1))
+print("Nueva Delhi:", formato_12(hora + 11.5))
+
+
+
+
+
+yuan=0.14
+yen=0.0063
+dolar=1
+euro=1.16
+libra=1.33
+mxn=0.057
+pesos=float(input("pon el valor de la cantidad de pesos a con convertir: "))
+cantidad_dolar=pesos*mxn
+print("Los pesos equivalen a:")
+print("Dolares",cantidad_dolar)
+print("Euros:",cantidad_dolar/euro)
+print("Libras:",cantidad_dolar/libra)
+print("Yuanes:",cantidad_dolar/yuan)
+print("yenes",cantidad_dolar/yen)

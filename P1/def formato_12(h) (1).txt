@@ -1,0 +1,40 @@
+#1
+tupla=(10,"Hola",3.14)
+print(tupla)
+#2
+tupla=(1,2,3,4,5)
+print(tupla)
+#3
+tupla1=(1,2,3)
+tupla2=(4,5,6)
+tupla_final=tupla1+tupla2
+print(tupla_final)
+#4
+tupla = ('a','b','c')
+
+print(tupla[0],tupla[1],tupla[2])
+#5
+tupla=(1,3,5,7,9)
+existe=7 in tupla
+print(existe)
+#6
+tupla=(0,1,2,3,4,5)
+resultado=tupla[2:5]
+print(resultado)
+#7
+tupla =  (10,20,30,40,50)
+lenght=len(tupla)
+print(lenght)
+#8
+tupla=(1,2,3)
+resultado=tupla*3
+print(resultado)
+#9
+lista=[1,2,3]
+tupla=tuple(lista)
+print(tupla)
+#10
+tupla=(5,12,3,8,15)
+valor_minimo=min(tupla)
+valor_maximo=max(tuple)
+print('minimo:',valor_minimo,'maximo:',valor_maximo)
