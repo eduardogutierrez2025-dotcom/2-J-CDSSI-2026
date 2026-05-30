@@ -1,0 +1,159 @@
+def plants_and_zombies(lawn, zombies):
+
+    rows = len(lawn)
+    cols = len(lawn[0])
+
+    shooters = []
+
+    for r in range(rows):
+        for c in range(cols):
+
+            cell = lawn[r][c]
+
+            if cell.isdigit():
+                shooters.append({
+                    "type": "N",
+                    "row": r,
+                    "col": c,
+                    "power": int(cell)
+                })
+
+            elif cell == "S":
+                shooters.append({
+                    "type": "S",
+                    "row": r,
+                    "col": c
+                })
+
+    active = []
+    move = 0
+
+    while True:
+
+        # Crear zombies
+        for z in zombies:
+
+            if z[0] == move:
+
+                active.append({
+                    "row": z[1],
+                    "col": cols,
+                    "hp": z[2]
+                })
+
+        # Mover zombies
+        for z in active:
+            z["col"] -= 1
+
+        # Perder
+        for z in active:
+
+            if z["col"] < 0:
+                return move
+
+        # Destruir plantas
+        new_shooters = []
+
+        for s in shooters:
+
+            dead = False
+
+            for z in active:
+
+                if z["row"] == s["row"] and z["col"] == s["col"]:
+                    dead = True
+                    break
+
+            if not dead:
+                new_shooters.append(s)
+
+        shooters = new_shooters
+
+        # Shooters normales
+        normal = []
+
+        for s in shooters:
+
+            if s["type"] == "N":
+                normal.append(s)
+
+        normal.sort(key=lambda x: x["col"])
+
+        for s in normal:
+
+            shots = s["power"]
+
+            while shots > 0:
+
+                targets = []
+
+                for z in active:
+
+                    if z["row"] == s["row"] and z["col"] > s["col"]:
+                        targets.append(z)
+
+                if not targets:
+                    break
+
+                target = min(targets, key=lambda z: z["col"])
+
+                target["hp"] -= 1
+                shots -= 1
+
+                if target["hp"] <= 0:
+                    active.remove(target)
+
+        # S shooters
+        special = []
+
+        for s in shooters:
+
+            if s["type"] == "S":
+                special.append(s)
+
+        special.sort(key=lambda x: (-x["col"], x["row"]))
+
+        for s in special:
+
+            for dr in [-1, 0, 1]:
+
+                r = s["row"]
+                c = s["col"]
+
+                while True:
+
+                    r += dr
+                    c += 1
+
+                    if r < 0 or r >= rows or c >= cols:
+                        break
+
+                    target = None
+
+                    for z in active:
+
+                        if z["row"] == r and z["col"] == c:
+                            target = z
+                            break
+
+                    if target:
+
+                        target["hp"] -= 1
+
+                        if target["hp"] <= 0:
+                            active.remove(target)
+
+                        break
+
+        # Ganar
+        pending = False
+
+        for z in zombies:
+
+            if z[0] > move:
+                pending = True
+
+        if not active and not pending:
+            return None
+
+        move += 1
